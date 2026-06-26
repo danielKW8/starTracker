@@ -53,9 +53,13 @@ void loop() {
 void degreesToSteps(int degrees) {
   int stepsToMove = (degrees * steps) / 360;
   stepper->move(stepsToMove);
+  Serial.print("Moving stepper " + String(stepsToMove) + " steps (" + String(degrees) + " degrees).");
+
+
   // Wait until the stepper has finished moving
   while (stepper->isRunning()) {
     delay(timeInterval * 1000); //wait timeInterval seconds
+    Serial.println("Interval: " + String(timeInterval) + "seconds");
     // Wait until the stepper has finished moving
   }
 }
