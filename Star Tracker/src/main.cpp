@@ -22,10 +22,9 @@ namespace calculations {
 
   const float degreesPerInterval = degreesPerSecond * StepperData::timeInterval; // Calculate degrees to move in the given time interval
 
+  //MOTOR SPEED
   const float stepsToMovePerInterval = (degreesPerInterval * StepperData::steps) / 360.0; // Calculate the speed in steps to move per interval
 }
-
-// TO DO: ADD MOTOR SPEED DEFINITION BASED ON STEPSTOMOVEPERINTERVAL
 
 // ----------------------------------- Initialize Engine -----------------------------------
 FastAccelStepperEngine engine = FastAccelStepperEngine();
@@ -41,10 +40,8 @@ void setup() {
 
   if (stepper) {
     stepper->setDirectionPin(StepperData::dirPin);
-    stepper->setEnablePin(4); // Optional: Set an enable pin if your driver has one
     stepper->setAutoEnable(true); // Automatically enable the stepper when stepping
-
-    stepper->setSpeedInHz(1000); // Set speed in Hz (steps per second)
+    stepper->setSpeedInHz(calculations::stepsToMovePerInterval); // Set speed in Hz (steps per second)
 
     Serial.println("Stepper initialized.");
   } else {
