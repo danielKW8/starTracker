@@ -51,7 +51,7 @@ void setup() {
 
 // put function definitions here:
 //run stepper degrees to steps
-void degreesToSteps(int degrees) {
+void degreesToSteps(float degrees) {
   int stepsToMove = (degrees * StepperData::steps) / 360;
   stepper->move(stepsToMove);
   Serial.print("Moving stepper " + String(stepsToMove) + " steps (" + String(degrees) + " degrees).");
