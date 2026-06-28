@@ -49,11 +49,6 @@ void setup() {
   }
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-  degreesToSteps(calculations::degreesPerInterval);
-}
-
 // put function definitions here:
 //run stepper degrees to steps
 void degreesToSteps(int degrees) {
@@ -69,3 +64,9 @@ void degreesToSteps(int degrees) {
     // Wait until the stepper has finished moving
   }
 }
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  degreesToSteps(calculations::degreesPerInterval);
+}
+
