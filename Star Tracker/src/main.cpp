@@ -4,10 +4,14 @@
 // ----------------------------------- STEPPER DRIVER CONFIG!!!!! -----------------------------------
 namespace StepperData {
   //Pin Assignments
-  const int stepPin = 2; 
-  const int dirPin = 3; 
-
+  const int stepPin = 6; 
+  const int dirPin = 5;   
+  const int MS1 = 11;
+  const int MS2 = 10;
+  const int MS3 = 9;
+  const int shutter = 2;
   //stepper settings
+
   const int steps = 3200;
   const int gearRatio = 200; 
 
@@ -31,10 +35,22 @@ FastAccelStepperEngine engine = FastAccelStepperEngine();
 
 FastAccelStepper *stepper;
 
+void stepperMode() {
+  pinMode(StepperData::MS1, OUTPUT);
+  pinMode(StepperData::MS2, OUTPUT);
+  pinMode(StepperData::MS3, OUTPUT);
+
+  // Set the microstepping mode to 1/16
+  digitalWrite(StepperData::MS1, HIGH);
+  digitalWrite(StepperData::MS2, HIGH);
+  digitalWrite(StepperData::MS3, HIGH);
+}
+
 void setup() {
   Serial.begin(9600);
 
   engine.init();
+  stepperMode(); // Set the microstepping mode before connecting the stepper
 
   stepper = engine.stepperConnectToPin(StepperData::stepPin);
 
@@ -42,6 +58,7 @@ void setup() {
     stepper->setDirectionPin(StepperData::dirPin);
     stepper->setAutoEnable(true); // Automatically enable the stepper when stepping
     stepper->setSpeedInHz(calculations::stepsToMovePerInterval); // Set speed in Hz (steps per second)
+    stepper->setAcceleration(1000); // Set acceleration in steps/s^2
 
     Serial.println("Stepper initialized.");
   } else {
@@ -69,4 +86,3 @@ void loop() {
   // put your main code here, to run repeatedly:
   degreesToSteps(calculations::degreesPerInterval);
 }
-
